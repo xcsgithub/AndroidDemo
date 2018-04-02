@@ -1,8 +1,8 @@
 package com.example.xcs.xcsdemo.nestingscroll;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -35,16 +35,14 @@ public class EventDispatchPlanLayout extends ViewGroup {
 
     private int mHeaderInitOffset;
     private int mHeaderCurrentOffset;
-    private int mHeaderEndOffset = 0;
 
     private int mTargetInitOffset;
     private int mTargetCurrentOffset;
-    private int mTargetEndOffset = 0;
+    private final int mTargetEndOffset = 0;
 
     private int mActivePointerId = INVALID_POINTER;
     private boolean mIsDragging;
     private float mInitialDownY;
-    private float mInitialMotionY;
     private float mLastMotionY;
 
     private VelocityTracker mVelocityTracker;
@@ -190,7 +188,7 @@ public class EventDispatchPlanLayout extends ViewGroup {
                 if (pointerIndex < 0) {
                     return false;
                 }
-                mInitialMotionY = ev.getY(pointerIndex);
+                mInitialDownY = ev.getY(pointerIndex);
                 break;
             case MotionEvent.ACTION_MOVE:
                 pointerIndex = ev.findPointerIndex(mActivePointerId);
@@ -217,6 +215,7 @@ public class EventDispatchPlanLayout extends ViewGroup {
         return mIsDragging;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         final int action = ev.getAction();
@@ -285,10 +284,10 @@ public class EventDispatchPlanLayout extends ViewGroup {
                     finishDrag((int) vy);
                 }
                 mActivePointerId = INVALID_POINTER;
-                releaseVelocityTracke();
+                releaseVelocityTrack();
                 return false;
             case MotionEvent.ACTION_CANCEL:
-                releaseVelocityTracke();
+                releaseVelocityTrack();
                 return false;
         }
         return mIsDragging;
@@ -301,7 +300,7 @@ public class EventDispatchPlanLayout extends ViewGroup {
         mVelocityTracker.addMovement(event);
     }
 
-    private void releaseVelocityTracke() {
+    private void releaseVelocityTrack() {
         if (null != mVelocityTracker) {
             mVelocityTracker.clear();
             mVelocityTracker.recycle();
@@ -313,8 +312,7 @@ public class EventDispatchPlanLayout extends ViewGroup {
         if (y < mInitialDownY || mTargetCurrentOffset > mTargetEndOffset) {
             final float yDiff = Math.abs(y - mInitialDownY);
             if (yDiff > mTouchSlop && !mIsDragging) {
-                mInitialMotionY = mInitialDownY + mTouchSlop;
-                mLastMotionY = mInitialMotionY;
+                mLastMotionY = mInitialDownY + mTouchSlop;
                 mIsDragging = true;
             }
         }
@@ -352,6 +350,7 @@ public class EventDispatchPlanLayout extends ViewGroup {
         mTargetCurrentOffset = target;
 
         int headerTarget;
+        int mHeaderEndOffset = 0;
         if (mTargetCurrentOffset >= mTargetInitOffset) {
             headerTarget = mHeaderInitOffset;
         } else if (mTargetCurrentOffset <= mTargetEndOffset) {
