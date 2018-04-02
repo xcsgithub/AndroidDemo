@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.xcs.xcsdemo.event.MessageEvent;
+import com.example.xcs.xcsdemo.eventbus.MessageEvent;
 import com.example.xcs.xcsdemo.recycleview.RecycleScrollToActivity;
 
 import org.greenrobot.eventbus.EventBus;

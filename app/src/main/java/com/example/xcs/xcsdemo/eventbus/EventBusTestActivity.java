@@ -1,4 +1,4 @@
-package com.example.xcs.xcsdemo.event;
+package com.example.xcs.xcsdemo.eventbus;
 
 import android.app.Activity;
 import android.os.Bundle;
