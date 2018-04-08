@@ -14,6 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetWork {
     private static DrunbiApi drunbiApi;
+    private static GankApi gankApi;
     private static OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
     private static Converter.Factory gsonConverterFactory = GsonConverterFactory.create();
     public static CallAdapter.Factory rxJavaCallAdapterFactory = RxJava2CallAdapterFactory.create();
@@ -32,5 +33,20 @@ public class NetWork {
             drunbiApi = retrofit.create(DrunbiApi.class);
         }
         return drunbiApi;
+    }
+
+    public static GankApi getGankApi(){
+        if (gankApi == null) {
+            httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            okHttpClient.addInterceptor(httpLoggingInterceptor);
+            Retrofit retrofit = new Retrofit.Builder()
+                    .client(okHttpClient.build())
+                    .baseUrl("http://gank.io/api/")
+                    .addConverterFactory(gsonConverterFactory)
+                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
+                    .build();
+            gankApi = retrofit.create(GankApi.class);
+        }
+        return gankApi;
     }
 }

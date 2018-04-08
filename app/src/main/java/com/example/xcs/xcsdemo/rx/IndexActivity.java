@@ -23,6 +23,7 @@ public class IndexActivity extends AppCompatActivity {
     ViewPager viewPager;
     @BindView(R.id.tab)
     TabLayout tabLayout;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,17 +32,36 @@ public class IndexActivity extends AppCompatActivity {
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                return new ElementaryFragment();
+                switch (position) {
+                    case 0:
+                        return new ElementaryFragment();
+                    case 1:
+                        return new MapFragment();
+                    case 2:
+                        return new ZipFragment();
+                    default:
+                        return new ElementaryFragment();
+                }
+
             }
 
             @Override
             public int getCount() {
-                return 1;
+                return 3;
             }
 
             @Override
             public CharSequence getPageTitle(int position) {
-                return getString(R.string.title_elementary);
+                switch (position) {
+                    case 0:
+                        return getString(R.string.title_elementary);
+                    case 1:
+                        return getString(R.string.title_map);
+                    case 2:
+                        return getString(R.string.title_zip);
+                    default:
+                        return getString(R.string.title_elementary);
+                }
             }
         });
         tabLayout.setupWithViewPager(viewPager);
