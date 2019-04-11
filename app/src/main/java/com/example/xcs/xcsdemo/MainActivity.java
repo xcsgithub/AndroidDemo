@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.xcs.xcsdemo.eventbus.EventBusTestActivity;
 import com.example.xcs.xcsdemo.eventbus.MessageEvent;
 import com.example.xcs.xcsdemo.recycleview.RecycleScrollToActivity;
 
@@ -29,19 +30,25 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
         setContentView(R.layout.activity_main);
+        EventBus.getDefault().register(this);
+
     }
 
     public void onClick(View view){
-        startActivity(new Intent(this,RecycleScrollToActivity.class));
-    }
+        startActivity(new Intent(this,EventBusTestActivity.class));
 
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event){
-        Toast.makeText(this, event.message, Toast.LENGTH_SHORT).show();
-        btnEvent.setText(event.message);
+      //  Toast.makeText(this, event.message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().post(new MessageEvent("hello ,event"));
     }
 
     @Override

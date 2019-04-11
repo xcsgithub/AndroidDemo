@@ -121,4 +121,13 @@ public class ExampleUnitTest {
         }
         System.out.print(list.get(0));
     }
+
+    @Test
+    public void testArrayAddAction(){
+        List<String> list = new ArrayList<>(100000);
+        for (int i = 0; i< 100000; i ++){
+            list.add(String.valueOf(i));
+        }
+
+    }
 }
