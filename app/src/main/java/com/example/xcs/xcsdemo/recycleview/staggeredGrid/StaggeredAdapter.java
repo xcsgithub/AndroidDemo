@@ -44,7 +44,6 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
         holder.tvName.setText(image.getId());
         Glide.with(context)
                 .load(image.getUrls().getSmall())
-                .
                 .into(holder.imageView);
     }
 
