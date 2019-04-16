@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.example.xcs.xcsdemo.eventbus.EventBusTestActivity;
 import com.example.xcs.xcsdemo.eventbus.MessageEvent;
 import com.example.xcs.xcsdemo.recycleview.RecycleScrollToActivity;
+import com.example.xcs.xcsdemo.recycleview.staggeredGrid.StaggeredLayoutActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -32,11 +33,10 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         EventBus.getDefault().register(this);
-
     }
 
     public void onClick(View view){
-        startActivity(new Intent(this,EventBusTestActivity.class));
+        startActivity(new Intent(this, StaggeredLayoutActivity.class));
 
     }
 
