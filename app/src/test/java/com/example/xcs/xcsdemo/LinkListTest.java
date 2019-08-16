@@ -12,7 +12,7 @@ public class LinkListTest {
 
     public LinkList createLinkList(){
         LinkList linkList = new LinkList();
-        for (int i = 0; i< 10; i++){
+        for (int i = 0; i< 3; i++){
             linkList.addNode2Last(i);
         }
         return linkList;
